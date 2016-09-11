@@ -4,11 +4,10 @@
 var app = angular.module('analyticsApp');
 
 app.controller('AnalyticsController', [
-  '$scope',
   'data',
-  function($scope, data) {
-    $scope.test = 'Hello World!';
-    $scope.data = data;
+  function(data) {
+    this.test = 'Hello World!';
+    this.data = data;
   }]);
 
 })();

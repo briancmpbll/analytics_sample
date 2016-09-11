@@ -14,6 +14,7 @@ app.config([
       url: '/index',
       templateUrl: '/templates/_analytics.html',
       controller: 'AnalyticsController',
+      controllerAs: 'ctrl',
       resolve: {
         data: function(Data) {
           return Data.$promise;
