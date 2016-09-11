@@ -1,7 +1,10 @@
 (function() {
 'use strict';
 
-var app = angular.module('analyticsApp', ['ui.router']);
+var app = angular.module('analyticsApp', [
+  'ui.router',
+  'ngResource'
+]);
 
 app.config([
   '$stateProvider',
@@ -10,7 +13,12 @@ app.config([
     $stateProvider.state('index', {
       url: '/index',
       templateUrl: '/templates/_analytics.html',
-      controller: 'AnalyticsController'
+      controller: 'AnalyticsController',
+      resolve: {
+        data: function(Data) {
+          return Data.$promise;
+        }
+      }
     });
 
     $urlRouterProvider.otherwise('index');

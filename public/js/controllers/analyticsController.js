@@ -5,8 +5,10 @@ var app = angular.module('analyticsApp');
 
 app.controller('AnalyticsController', [
   '$scope',
-  function($scope) {
+  'data',
+  function($scope, data) {
     $scope.test = 'Hello World!';
+    $scope.data = data;
   }]);
 
 })();
