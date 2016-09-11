@@ -1,0 +1,22 @@
+{
+  "name": "analytics_sample",
+  "description": "",
+  "main": "app/main.js",
+  "authors": [
+    "Brian Campbell <briancmpbll@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "bootstrap": "^3.3.7"
+  }
+}
