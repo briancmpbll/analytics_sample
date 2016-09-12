@@ -1,10 +1,14 @@
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-body">
-      <h1>{{ctrl.test}}</h1>
-      <p>{{ctrl.data.length}} records fetched</p>
-
-      <year-select data="data"></year-select>
+      <div class="row">
+        <div class="col-sm-4">
+          <year-select years="ctrl.years" year="ctrl.currentYear"></year-select>
+        </div>
+        <div class="col-sm-4">
+          <pie-chart year="ctrl.currentYear"></pie-chart>
+        </div>
+      </div>
     </div>
   </div>
 </div>

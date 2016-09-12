@@ -1,3 +1,4 @@
-<select name="year">
-  <option value="all">All</option>
+<h3>Fiscal Year</h3>
+<select class="form-control" ng-model="$ctrl.year">
+  <option ng-repeat="(key, value) in $ctrl.years" ng-value="key">{{key}}</option>
 </select>
