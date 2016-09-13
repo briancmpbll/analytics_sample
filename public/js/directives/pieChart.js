@@ -11,14 +11,12 @@ app.directive('pieChart', function() {
       year: '<',
       data: '<'
     },
-    link: function(scope, element) {
-      var revenueByProduct = d3.nest()
-        .key(function(d) { return d.product; })
-        .rollup(function(entries) {
-          return d3.sum(entries, function(d) { return d.revenue; });
-        })
-        .entries(scope.data[scope.year]);
+    controller: angular.noop,
+    controllerAs: 'ctrl',
+    bindToController: true,
 
+    link: function(scope, element, attrs, ctrl) {
+      // Setup static elements.
       var width = 200;
       var height = 200;
       var radius = Math.min(width, height) / 2;
@@ -40,12 +38,34 @@ app.directive('pieChart', function() {
         .append('g')
           .attr('transform', 'translate(' + (width/2) + ',' + (height/2) + ')');
 
-      svg.selectAll('path')
-        .data(pie(revenueByProduct))
-        .enter()
-        .append('path')
-        .attr('d', arc)
-        .attr('fill', function(d) { return color(d.data.key); });
+      // Declare the function to render dynamic elements.
+      ctrl.render = function() {
+        var paths = svg.selectAll('path')
+          .data(pie(ctrl.revenueByProduct));
+
+        // Merge new sections with existing sections and apply operations
+        // to both.
+        paths.enter().append('path')
+          .merge(paths)
+            .attr('d', arc)
+            .attr('fill', function(d) { return color(d.data.key); });
+
+        // Remove unecessary sections
+        paths.exit().remove();
+      };
+
+      scope.$watch('ctrl.year', function(newValue, oldValue) {
+        // Only regroup the data when the year changes.
+        // Group the year data by product and then sum the revenue.
+        ctrl.revenueByProduct = d3.nest()
+          .key(function(d) { return d.product; })
+          .rollup(function(entries) {
+            return d3.sum(entries, function(d) { return d.revenue; });
+          })
+          .entries(ctrl.data[ctrl.year]);
+
+        ctrl.render();
+      });
     }
   };
 });
