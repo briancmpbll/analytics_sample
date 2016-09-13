@@ -4,8 +4,9 @@
 var app = angular.module('analyticsApp');
 
 app.controller('AnalyticsController', [
+  '$scope',
   'data',
-  function(data) {
+  function($scope, data) {
     var ctrl = this;
 
     ctrl.test = 'Hello World!';
@@ -26,6 +27,7 @@ app.controller('AnalyticsController', [
 
     ctrl.setCurrentProduct = function(product) {
       ctrl.currentProduct = product;
+      $scope.$apply();
     };
   }]);
 
