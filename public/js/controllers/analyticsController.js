@@ -21,6 +21,12 @@ app.controller('AnalyticsController', [
       }
       ctrl.years[record.year].push(record);
     });
+
+    ctrl.currentProduct = null;
+
+    ctrl.setCurrentProduct = function(product) {
+      ctrl.currentProduct = product;
+    };
   }]);
 
 })();

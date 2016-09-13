@@ -9,7 +9,8 @@ app.directive('pieChart', function() {
     templateUrl: '/templates/_pie-chart.html',
     scope: {
       year: '<',
-      data: '<'
+      data: '<',
+      onProductClicked: '&'
     },
     controller: angular.noop,
     controllerAs: 'ctrl',
@@ -46,6 +47,9 @@ app.directive('pieChart', function() {
         // Merge new sections with existing sections and apply operations
         // to both.
         paths.enter().append('path')
+          .on('click', function(d) {
+            ctrl.onProductClicked( {product: d.data.key} );
+          })
           .merge(paths)
             .attr('d', arc)
             .attr('fill', function(d) { return color(d.data.key); });

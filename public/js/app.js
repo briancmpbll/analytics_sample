@@ -12,7 +12,7 @@ app.config([
   function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('index', {
       url: '/index',
-      templateUrl: '/templates/_analytics.html',
+      templateUrl: '/templates/analytics.html',
       controller: 'AnalyticsController',
       controllerAs: 'ctrl',
       resolve: {

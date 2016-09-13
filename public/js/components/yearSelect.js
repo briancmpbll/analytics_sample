@@ -7,8 +7,7 @@ app.component('yearSelect', {
   templateUrl: '/templates/_year-select.html',
   bindings: {
     years: '<',
-    year: '=',
-    onChange: '&'
+    year: '='
   }
 });
 })();

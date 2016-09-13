@@ -6,7 +6,7 @@
           <year-select years="ctrl.years" year="ctrl.currentYear"></year-select>
         </div>
         <div class="col-sm-4">
-          <pie-chart year="ctrl.currentYear" data="ctrl.years"></pie-chart>
+          <pie-chart year="ctrl.currentYear" data="ctrl.years" on-product-clicked="ctrl.setCurrentProduct(product)"></pie-chart>
         </div>
       </div>
     </div>
