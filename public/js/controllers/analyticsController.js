@@ -9,7 +9,7 @@ app.controller('AnalyticsController', [
   function($scope, data) {
     var ctrl = this;
 
-    ctrl.test = 'Hello World!';
+    ctrl.data = data;
 
     ctrl.currentYear = 'All';
     ctrl.years = {

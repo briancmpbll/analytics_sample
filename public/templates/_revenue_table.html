@@ -1,7 +1,22 @@
-<h3>
+<h4>
   Revenue Report
-  <span ng-if="$ctrl.year !== 'All'">
-    : {{$ctrl.year}}
+  <span ng-if="ctrl.year !== 'All'">
+    : {{ctrl.year}}
   </span>
-  : {{$ctrl.product}}
-</h3>
+  : {{ctrl.product}}
+</h4>
+
+<table class="table-bordered table-striped">
+  <tr>
+    <th>Fiscal Year</th>
+    <th>Product</th>
+    <th>Region</th>
+    <th>Revenue</th>
+  </tr>
+  <tr ng-repeat="row in ctrl.revenueData | revenueTableFilter: ctrl.year:ctrl.product">
+    <td>{{row.year}}</td>
+    <td>{{row.product}}</td>
+    <td>{{row.country}}</td>
+    <td>{{row.revenue | millions}}</td>
+  </tr>
+</table>

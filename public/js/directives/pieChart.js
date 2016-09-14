@@ -58,11 +58,11 @@ app.directive('pieChart', function() {
         paths.exit().remove();
       };
 
-      scope.$watch('ctrl.year', function(newValue, oldValue) {
+      scope.$watch('ctrl.year', function() {
         // Only regroup the data when the year changes.
         // Group the year data by product and then sum the revenue.
         ctrl.revenueByProduct = d3.nest()
-          .key(function(d) { return d.product; })
+          .key(function(d) { return d.product; }).sortKeys(d3.ascending)
           .rollup(function(entries) {
             return d3.sum(entries, function(d) { return d.revenue; });
           })

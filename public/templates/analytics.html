@@ -10,7 +10,7 @@
           on-product-clicked="ctrl.setCurrentProduct(product)"></pie-chart>
         </div>
         <div class="col-sm-4">
-          <revenue-table ng-if="ctrl.currentProduct !== null" data="ctrl.years"
+          <revenue-table ng-if="ctrl.currentProduct !== null" data="ctrl.data"
           year="ctrl.currentYear" product="ctrl.currentProduct"></revenue-table>
         </div>
       </div>
