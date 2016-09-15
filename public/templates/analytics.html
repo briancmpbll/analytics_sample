@@ -2,14 +2,14 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-2">
           <year-select years="ctrl.years" year="ctrl.currentYear"></year-select>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-5">
           <pie-chart year="ctrl.currentYear" data="ctrl.years"
           on-product-clicked="ctrl.setCurrentProduct(product)"></pie-chart>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-5">
           <revenue-table ng-if="ctrl.currentProduct !== null" data="ctrl.data"
           year="ctrl.currentYear" product="ctrl.currentProduct"></revenue-table>
         </div>

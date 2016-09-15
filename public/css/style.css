@@ -2,7 +2,12 @@ revenue-table table {
   width: 100%;
 }
 
-.chart path {
+.chart path,
+.chart rect {
   fill-opacity: .4;
   stroke-width: 2;
+}
+
+.pie-chart path {
+  cursor: pointer;
 }
