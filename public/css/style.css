@@ -1,0 +1,8 @@
+revenue-table table {
+  width: 100%;
+}
+
+.chart path {
+  fill-opacity: .4;
+  stroke-width: 2;
+}

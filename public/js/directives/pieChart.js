@@ -3,7 +3,7 @@
 
 var app = angular.module('analyticsApp');
 
-app.directive('pieChart', function() {
+app.directive('pieChart', ['$filter', function($filter) {
   return {
     restrict: 'E',
     templateUrl: '/templates/_pie-chart.html',
@@ -20,7 +20,7 @@ app.directive('pieChart', function() {
       // Setup static elements.
       var width = 200;
       var height = 200;
-      var radius = Math.min(width, height) / 2;
+      var radius = Math.min(width, height) / 2 - 2;
 
       var arc = d3.arc()
         .innerRadius(0)
@@ -30,7 +30,7 @@ app.directive('pieChart', function() {
         .value(function(d) { return d.value; })
         .sort(null);
 
-      var color = d3.scaleOrdinal(d3.schemeCategory20);
+      var color = d3.scaleOrdinal(d3.schemeCategory10);
 
       var chart = d3.select(element[0]).select('.chart');
       var svg = chart.append('svg')
@@ -43,6 +43,8 @@ app.directive('pieChart', function() {
       ctrl.render = function() {
         var paths = svg.selectAll('path')
           .data(pie(ctrl.revenueByProduct));
+        var texts = svg.selectAll('text')
+          .data(pie(ctrl.revenueByProduct));
 
         // Merge new sections with existing sections and apply operations
         // to both.
@@ -52,10 +54,24 @@ app.directive('pieChart', function() {
           })
           .merge(paths)
             .attr('d', arc)
-            .attr('fill', function(d) { return color(d.data.key); });
+            .attr('fill', function(d) { return color(d.data.key); })
+            .attr('stroke', function(d) { return color(d.data.key); });
+
+        texts.enter().append('text')
+          .merge(texts)
+            .attr('transform', function(d) {
+              d.innerRadius = 0;
+              d.outerRadius = radius;
+              return 'translate(' + arc.centroid(d) + ')';
+            })
+            .attr('text-anchor', 'middle')
+            .text(function(d) {
+              return $filter('millions')(d.value);
+            });
 
         // Remove unecessary sections
         paths.exit().remove();
+        texts.exit().remove();
       };
 
       scope.$watch('ctrl.year', function() {
@@ -72,5 +88,5 @@ app.directive('pieChart', function() {
       });
     }
   };
-});
+}]);
 })();
