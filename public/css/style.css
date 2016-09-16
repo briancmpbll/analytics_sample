@@ -11,3 +11,7 @@ revenue-table table {
 .slice {
   cursor: pointer;
 }
+
+.below-average .revenue-cell {
+  font-weight: bold;
+}

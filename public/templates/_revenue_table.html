@@ -13,10 +13,10 @@
     <th>Region</th>
     <th>Revenue</th>
   </tr>
-  <tr ng-repeat="row in ctrl.revenueData | revenueTableFilter: ctrl.year:ctrl.product">
+  <tr ng-repeat="row in ctrl.filteredData" ng-class="{'below-average' : row.revenue < ctrl.average}">
     <td>{{row.year}}</td>
     <td>{{row.product}}</td>
     <td>{{row.country}}</td>
-    <td>{{row.revenue | millions}}</td>
+    <td class="revenue-cell">{{row.revenue | millions}}</td>
   </tr>
 </table>

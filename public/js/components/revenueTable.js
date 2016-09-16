@@ -14,7 +14,7 @@ app.component('revenueTable', {
   controller: ['$scope', function($scope) {
     var ctrl = this;
 
-    ctrl.revenueData = [];
+    var revenueData = [];
 
     var nestedData = d3.nest()
       .key(function(d) { return d.year; }).sortKeys(d3.ascending)
@@ -28,7 +28,7 @@ app.component('revenueTable', {
     nestedData.forEach(function(year) {
       year.values.forEach(function(product) {
         product.values.forEach(function(country) {
-          ctrl.revenueData.push({
+          revenueData.push({
             year: year.key,
             product: product.key,
             country: country.key,
@@ -36,6 +36,27 @@ app.component('revenueTable', {
           });
         });
       });
+    });
+
+    ctrl.average = 0;
+    ctrl.filteredData = [];
+
+    $scope.$watchGroup(['ctrl.product', 'ctrl.year'], function() {
+      var count = 0;
+      var sum = 0;
+      ctrl.filteredData = [];
+
+      revenueData.forEach(function(elem) {
+        if ((ctrl.year === 'All' || elem.year === ctrl.year) &&
+          elem.product === ctrl.product) {
+
+          ++count;
+          sum += elem.revenue;
+          ctrl.filteredData.push(elem);
+        }
+      });
+
+      ctrl.average = sum / count;
     });
   }]
 });
