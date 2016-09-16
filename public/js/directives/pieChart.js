@@ -37,6 +37,10 @@ app.directive('pieChart', ['$filter', function($filter) {
 
       var color = d3.scaleOrdinal(d3.schemeCategory10);
 
+      var transition = d3.transition()
+        .duration(750)
+        .ease(d3.easeLinear);
+
       var svg = d3.select(element[0]).select('.chart').append('svg')
         .attr('width', width)
         .attr('height', pieHeight + legendHeight);
@@ -57,26 +61,41 @@ app.directive('pieChart', ['$filter', function($filter) {
             ctrl.onProductClicked( {product: d.data.key} );
           })
           // Add slice children.
-          .each(function() {
+          .each(function(d) {
             var me = d3.select(this);
 
             me.append('path');
-            me.append('text');
+            me.append('text')
+              .attr('text-anchor', 'middle')
+              // Give the text an initial position so it doesn't explode from
+              // center.
+              .attr('transform', 'translate(' + arc.centroid(d) + ')');
           })
           // Merge with existing slices and update fields.
           .merge(slices)
           .each(function(d) {
             var me = d3.select(this);
 
-            me.select('path')
-              .attr('d', arc(d))
-              .attr('fill', color(d.data.key))
-              .attr('stroke', color(d.data.key));
+            transition.each(function() {
+              me.select('path')
+                .attr('fill', color(d.data.key))
+                .attr('stroke', color(d.data.key))
+                .transition()
+                // Create custom tween function to prevent pie slices from
+                // disappearing during transition.
+                .attrTween('d', function(a) {
+                  var i = d3.interpolate(this._current, a);
+                  this._current = i(0);
+                  return function(t) {
+                    return arc(i(t));
+                  };
+                });
 
-            me.select('text')
-              .attr('transform', 'translate(' + arc.centroid(d) + ')')
-              .attr('text-anchor', 'middle')
-              .text($filter('millions')(d.value));
+              me.select('text')
+                .text($filter('millions')(d.value))
+                .transition()
+                .attr('transform', 'translate(' + arc.centroid(d) + ')');
+            });
           });
 
         // Remove old slices.
@@ -89,6 +108,9 @@ app.directive('pieChart', ['$filter', function($filter) {
         // Append new legend rows.
         legend.enter().append('g')
           .attr('class', 'legend')
+          .on('click', function(d) {
+            ctrl.onProductClicked( {product: d} );
+          })
           .attr('transform', function(d, i) {
             var height = legendRectSize + legendSpacing;
             var vert = legendSpacing + pieHeight + (i * height);
