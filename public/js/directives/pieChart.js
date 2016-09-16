@@ -129,11 +129,13 @@ app.directive('pieChart', ['$filter', function($filter) {
           // Merge new elements with existing elements and update fields.
           .merge(legend)
           .each(function() {
-            d3.select(this).select('rect')
+            var me = d3.select(this);
+
+            me.select('rect')
               .style('fill', color)
               .style('stroke', color);
 
-            d3.select(this).select('text')
+            me.select('text')
               .text(function(d) { return d; });
           });
 
