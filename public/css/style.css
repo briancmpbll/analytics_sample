@@ -8,6 +8,6 @@ revenue-table table {
   stroke-width: 2;
 }
 
-.pie-chart path {
+.slice {
   cursor: pointer;
 }
